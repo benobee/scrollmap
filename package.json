@@ -1,16 +1,48 @@
 {
   "name": "scrollmap",
-  "version": "1.0.1",
-  "description": "A module for testing if the element is visible on the current viewport. Trigger callbacks are provided, as well as a configuration for surface trigger area. (0.5 = 50%) - more docs coming soon.",
-  "main": "scrollmap.js",
+  "version": "1.0.9",
+  "description": "A module for testing if an element is visible in the viewport. Trigger callbacks are provided, as well as a configuration for surface trigger area. (0.5 = 50%) - more docs coming soon.",
+  "main": "./src/scrollmap.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "start": "webpack --progress --colors --watch",
+    "watch": "./node_modules/.bin/webpack -d --watch --colors",
+    "build": "set PROD_ENV=true && webpack -p",
+    "dev": "webpack-dev-server ./index.js --hot --watch --colors",
+    "lint": "eslint source"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benobee/scrollmap"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.4.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "es6-promise": "^3.3.1",
+    "eslint": "^3.17.1",
+    "eslint-loader": "^1.6.3",
+    "eslint-watch": "^3.0.1",
+    "exports-loader": "^0.6.4",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "imports-loader": "^0.7.1",
+    "json-loader": "^0.5.4",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-runtime": "^6.23.0",
+    "es6-promise": "^3.3.1",
+    "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony"
   },
   "keywords": [
-    "animation",
     "element",
     "visible",
-    "scroll"
+    "scroll",
+    "DOM",
+    "viewport",
+    "viewable"
   ],
   "author": "Ben Obee",
   "license": "ISC"
