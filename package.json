@@ -1,6 +1,6 @@
 {
   "name": "scrollmap",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "A module for testing if an element is visible in the viewport. Trigger callbacks are provided, as well as a configuration for surface trigger area. (0.5 = 50%) - more docs coming soon.",
   "main": "./src/scrollmap.js",
   "scripts": {
