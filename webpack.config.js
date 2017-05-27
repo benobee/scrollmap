@@ -32,8 +32,6 @@ const input = {
     entry: ['./src/scrollmap.js'],
     devtool: isProduction ? '' : 'eval',
     node: {
-        dns: 'mock',
-        net: 'mock',
         fs: 'empty'
     }
 };

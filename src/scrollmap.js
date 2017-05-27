@@ -16,8 +16,8 @@ class Scroll_Event_Trigger {
   }
   add(el, callback) {
 
-  	/* 
-  	 * @desc add classname indicating element is intialized
+    /* 
+     * @desc add classname indicating element is intialized
     */
    
     const type = (typeof el);
@@ -37,7 +37,9 @@ class Scroll_Event_Trigger {
     });
   }
   remove(trigger) {
+
       trigger = null;
+      
   }
   elementInViewport(el, percetageOfElement) {
 
@@ -71,6 +73,7 @@ class Scroll_Event_Trigger {
   }
   checkVisible(point) {
     const targetElement = point.element;
+
     const viewport = this.elementInViewport(targetElement, point.surfaceVisible);
 
     if (viewport) {
@@ -125,10 +128,13 @@ class Scroll_Event_Trigger {
        return direction;
   }
   extend(obj) {
+
     Object.assign(this, obj);
+
   }
   events() {
-  	//initial check on page load to see if elements are visible
+
+    //initial check on page load to see if elements are visible
     window.onload = () => {
       this.points.forEach((point) => {
         this.checkVisible(point);
@@ -136,7 +142,7 @@ class Scroll_Event_Trigger {
     };
 
     //check for visible elements on scroll
-    window.addEventListener("scroll", () => {
+    window.addEventListener("scroll, load", () => {
       this.scrollOrient = this.scrollDirection();
 
       this.points.forEach((point) => {
@@ -148,5 +154,7 @@ class Scroll_Event_Trigger {
 };
 
 const Scrollmap = new Scroll_Event_Trigger();
+
+window.Scrollmap = Scrollmap;
 
 export default Scrollmap;
