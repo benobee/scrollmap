@@ -14,6 +14,24 @@ class Scroll_Event_Trigger {
     this.points = [];
     this.events();
   }
+  sequence(array, options, func) {
+    const counter = [];
+
+    func(array[ 0 ]);
+
+    const timer = setInterval(() => {
+        counter.push(1);
+
+        func(array[ counter.length ]);
+
+        if (counter.length === array.length - 1) {
+           clearInterval(timer);
+        }
+
+    }, options.interval);
+
+    return this;
+  }
   add(el, callback) {
 
     /* 
@@ -35,11 +53,14 @@ class Scroll_Event_Trigger {
 
         this.points.push(point);
     });
+
+    return this;
   }
   remove(trigger) {
 
       trigger = null;
-      
+
+      return this;   
   }
   elementInViewport(el, percetageOfElement) {
 
@@ -106,6 +127,8 @@ class Scroll_Event_Trigger {
       if (direction === "Down" && string === "scrollDown") {
           callback();             
       }
+
+      return this;
   }
   scrollDirection() {
 
@@ -142,7 +165,7 @@ class Scroll_Event_Trigger {
     };
 
     //check for visible elements on scroll
-    window.addEventListener("scroll, load", () => {
+    window.addEventListener("scroll", () => {
       this.scrollOrient = this.scrollDirection();
 
       this.points.forEach((point) => {
@@ -158,3 +181,16 @@ const Scrollmap = new Scroll_Event_Trigger();
 window.Scrollmap = Scrollmap;
 
 export default Scrollmap;
+
+Scrollmap.add(".boxes", {
+  onTriggerIn() {
+      const array = this.element.querySelectorAll(".box");
+
+      Scrollmap.sequence(array, {interval: 100}, (item) => {
+          item.classList.add("color-change");
+      });
+  },
+  surfaceVisible: 0.2
+});
+
+

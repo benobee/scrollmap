@@ -13,11 +13,34 @@
 	#page{
 		max-width:1400px;
 		margin:0 auto;
+		height:350vh;
+	}
+	.boxes{
+		height:70vh;
+		display:flex;
+		justify-content: space-around;
+		align-items:center;
+		background:antiqueWhite;
+		margin-top:150px;
+	}	
+	.box{
+		height:250px;
+		width:250px;
+		background:lightgrey;
+		transition:1s;
+	}
+	.color-change{
+		background:red;
 	}
 </style>
 </head>
 <body class="view-list collection-type-blog">
 <main id="page">
+	<div class="boxes">
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+	</div>
 </main>
 <script src="/scrollmap.min.js" async></script>
 </body>
