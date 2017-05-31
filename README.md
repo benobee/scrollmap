@@ -13,11 +13,11 @@ Using ES6:
 
 Using a CDN via jsDelivr:
 
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.2.6/dist/scrollmap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.2.8/dist/scrollmap.min.js"></script>
 
 ********************************************
 
-** Scrollmap.add(target, options) **
+**Scrollmap.add(target, options)**
 
 	Scrollmap.add('.collection-list .items', {
 	    onTriggerIn() {
@@ -34,20 +34,40 @@ Using a CDN via jsDelivr:
 
 	    	$(this.element).removeClass("visible");
 	    },
+
+	   	//the percentage of the visible element in
+	   	//the viewport. A value of 1 will wait till
+	   	//the element's full size is viewable.
+
 	    surfaceVisible: 0.5
 	});
 	
 ********************************************
 
-** Scrollmap.sequence(target, options, callback) **
-
+**Scrollmap.sequence(target, options, callback)**
+		
 	Scrollmap.add(".boxes", {
 	  onTriggerIn() {
+
+	  	  //define the array of the elements to sequence
+
 	      const array = this.element.querySelectorAll(".box");
+		  
+		  //use the sequence method to define, interval and callback
+		  //function.
 
 	      Scrollmap.sequence(array, {interval: 100}, (item) => {
+
+	    	  //add any code to be triggered when
+	    	  //the element is in the viewport
+
 	          item.classList.add("color-change");
 	      });
 	  },
+
+	  //the percentage of the visible element in
+	  //the viewport. A value of 1 will wait till
+	  //the element's full size is viewable.
+
 	  surfaceVisible: 0.2
 	});

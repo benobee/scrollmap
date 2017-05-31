@@ -15,20 +15,12 @@ class Scroll_Event_Trigger {
     this.events();
   }
   sequence(array, options, func) {
-    const counter = [];
 
-    func(array[ 0 ]);
-
-    const timer = setInterval(() => {
-        counter.push(1);
-
-        func(array[ counter.length ]);
-
-        if (counter.length === array.length - 1) {
-           clearInterval(timer);
-        }
-
-    }, options.interval);
+    array.forEach((item, i) => {
+      setTimeout(() => {
+        func(array[ i ]);
+      }, options.interval * i);
+    });
 
     return this;
   }
@@ -182,15 +174,6 @@ window.Scrollmap = Scrollmap;
 
 export default Scrollmap;
 
-Scrollmap.add(".boxes", {
-  onTriggerIn() {
-      const array = this.element.querySelectorAll(".box");
 
-      Scrollmap.sequence(array, {interval: 100}, (item) => {
-          item.classList.add("color-change");
-      });
-  },
-  surfaceVisible: 0.2
-});
 
 
