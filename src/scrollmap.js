@@ -16,6 +16,11 @@ class Scroll_Event_Trigger {
   }
   sequence(array, options, func) {
 
+    /* 
+     * @desc run through an array of elements and apply a 
+     * staggered sequence delay
+    */
+   
     array.forEach((item, i) => {
       setTimeout(() => {
         func(array[ i ]);
@@ -173,7 +178,3 @@ const Scrollmap = new Scroll_Event_Trigger();
 window.Scrollmap = Scrollmap;
 
 export default Scrollmap;
-
-
-
-

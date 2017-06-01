@@ -7,13 +7,14 @@ A module for testing if a DOM element is visible in the viewport, then triggers 
 
 ********************************************
 
-Using ES6: 
+Using ES6:
 
 	import Scrollmap from 'scrollmap';
 
 Using a CDN via jsDelivr:
 
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.2.8/dist/scrollmap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.3.3/dist/scrollmap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.3.3/dist/scrollmap.js"></script>
 
 ********************************************
 
