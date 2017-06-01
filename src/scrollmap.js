@@ -10,9 +10,14 @@ import Trigger from './trigger';
 
 class Scroll_Event_Trigger {
   constructor() {
-    this.lastScrollTop = 0;
-    this.points = [];
-    this.events();
+      this.lastScrollTop = 0;
+      this.points = [];
+      this.events();
+  }
+  out(args) {
+      this.onTriggerOut = args;
+
+      return this;
   }
   sequence(array, options, func) {
 
@@ -22,14 +27,14 @@ class Scroll_Event_Trigger {
     */
    
     array.forEach((item, i) => {
-      setTimeout(() => {
-        func(array[ i ]);
-      }, options.interval * i);
+        setTimeout(() => {
+            func(array[ i ]);
+        }, options.interval * i);
     });
 
     return this;
   }
-  add(el, callback) {
+  trigger(el, options, callback) {
 
     /* 
      * @desc add classname indicating element is intialized
@@ -45,8 +50,9 @@ class Scroll_Event_Trigger {
 
     el.forEach((node) => {
         node.setAttribute(`data-scrollmap-loaded`, true);
-
-        const point = new Trigger(node, callback);
+        node.setAttribute(`data-scrollmap-triggered-in`, false);
+        node.setAttribute(`data-scrollmap-triggered-out`, false);
+        const point = new Trigger(node, options, callback);
 
         this.points.push(point);
     });
@@ -83,7 +89,7 @@ class Scroll_Event_Trigger {
     const amount = stats.height * percetageOfElement;
 
     if ( (stats.bottom - amount > stats.height) && (stats.top + amount < 0)) {
-      return true;
+        return true;
     }
 
     return false;
@@ -95,18 +101,29 @@ class Scroll_Event_Trigger {
     const viewport = this.elementInViewport(targetElement, point.surfaceVisible);
 
     if (viewport) {
-      targetElement.setAttribute(`data-is-visible`, true);
+        targetElement.setAttribute(`data-scrollmap-is-visible`, true);
+        targetElement.setAttribute(`data-scrollmap-triggered-in`, true);
 
-      if (point.onTriggerIn) {
+      if (!point.triggeredIn) {
           point.onTriggerIn();
+          if (point.runOnScroll === false) {
+              point.triggeredIn = true;
+          }
       }
 
     } else {
-      targetElement.setAttribute(`data-is-visible`, false);
+        targetElement.setAttribute(`data-scrollmap-is-visible`, false);
+        targetElement.setAttribute(`data-scrollmap-triggered-out`, true);
 
-      if (point.onTriggerOut) {
-          point.onTriggerOut();
-      }
+        if (point.alwaysRunOnTrigger === true) {
+            point.triggeredIn = false;
+            targetElement.setAttribute(`data-scrollmap-triggered-in`, false);
+        }
+
+        if (this.onTriggerOut && !point.triggeredOut && point.triggeredIn) {
+            this.onTriggerOut(point);
+            point.triggeredOut = true;
+        }
     }
   }
   on(string, callback) {
@@ -171,7 +188,7 @@ class Scroll_Event_Trigger {
     });
 
   }
-};
+}
 
 const Scrollmap = new Scroll_Event_Trigger();
 

@@ -1,9 +1,9 @@
 ******************************************** 
-# SCROLL MAP
+# SCROLLMAP
 
 **Description**
 
-A module for testing if a DOM element is visible in the viewport, then triggers callbacks on execution.
+A module for testing if a DOM element is visible in the viewport, then triggers callbacks on execution. 
 
 ********************************************
 
@@ -13,62 +13,87 @@ Using ES6:
 
 Using a CDN via jsDelivr:
 
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.3.3/dist/scrollmap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.3.3/dist/scrollmap.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.4.0/dist/scrollmap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.4.0/dist/scrollmap.js"></script>
 
 ********************************************
 
-**Scrollmap.add(target, options)**
+##Method (trigger)
 
-	Scrollmap.add('.collection-list .items', {
-	    onTriggerIn() {
+**Arguments**
 
-	    	//add any code to be triggered upon
-	    	//the element becoming visible
+**target (string or element)**:
+Using querySelectorAll a target string selector is needed, or you can specify an actual element.
 
-	        $(this.element).addClass("visible");
-	    },
-	    onTriggerOut() {
+**options (object)**: 
 
-	    	//add any code to be triggered when
-	    	//the element is out of the viewport
+  **surfaceVisible (number)**: the percentage area, which is represented as a number from 0 - 1 is the area of the 
+  element which is visible in the viewport. 
 
-	    	$(this.element).removeClass("visible");
-	    },
+  **runOnScroll (boolean)** : by default the callback is run only one time. By changing to true, the callback will be run as long as the scroll event is happening.
 
-	   	//the percentage of the visible element in
-	   	//the viewport. A value of 1 will wait till
-	   	//the element's full size is viewable.
+  **alwaysRunOnTrigger (boolean)**: by default the trigger callback will be executed only one time per being visible in the viewport. 
 
-	    surfaceVisible: 0.5
+**callback (object)**:
+This is the function which will be exectued when the element is detected in the viewport. To reference the node, pass it
+into the callback as an argument.
+
+**EXAMPLE**
+
+	Scrollmap.trigger('.collection-list .items', {surfaceVisible: 0.5, runOnScroll: true, alwaysRunOnTrigger: true}, (element) => {
+	    $(element).addClass("visible");
 	});
 	
 ********************************************
 
-**Scrollmap.sequence(target, options, callback)**
+##Method (sequence)
+
+**EXAMPLE**
 		
-	Scrollmap.add(".boxes", {
-	  onTriggerIn() {
+	Scrollmap.trigger(".boxes", { surfaceVisible: 0.2 }, (element) => {
 
-	  	  //define the array of the elements to sequence
+	    //define the array of the elements to sequence
 
-	      const array = this.element.querySelectorAll(".box");
-		  
-		  //use the sequence method to define, interval and callback
-		  //function.
+	    const array = element.querySelectorAll(".box");
+	      
+	    //use the sequence method to define, interval and callback
+	    //function.
 
-	      Scrollmap.sequence(array, {interval: 100}, (item) => {
+	    Scrollmap.sequence(array, {interval: 5}, (item) => {
 
-	    	  //add any code to be triggered when
-	    	  //the element is in the viewport
+		  //add any code to be triggered when
+		  //the element is in the viewport
 
-	          item.classList.add("color-change");
-	      });
-	  },
+	      item.classList.add("color-change");
 
-	  //the percentage of the visible element in
-	  //the viewport. A value of 1 will wait till
-	  //the element's full size is viewable.
-
-	  surfaceVisible: 0.2
+	  	});
 	});
+
+********************************************
+
+##Method (out)
+
+When the trigger is has been executed and element is no longer in the viewport the out method
+can be chained to the trigger to execute the specified function.
+
+**EXAMPLE**
+
+	Scrollmap.trigger(".boxes", {surfaceVisible: 0.2}, (element) => {
+		element.classList.add("foo");
+	}).out((element) => {
+		element.classList.add("bar");
+	});
+
+********************************************
+
+##Hooks
+
+**data-scrollmap-loaded (boolean):**
+Once the element is initialized.
+
+**data-scrollmap-is-visible (boolean):**
+If element is visible is viewport, the value will be set to true. When the elemnt is out of the viewport
+the value will be false.
+
+**data-scrollmap-triggered-in (boolean):**
+After element detection in viewport, a boolean will be set to true. False is set as default.

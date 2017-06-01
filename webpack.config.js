@@ -4,6 +4,7 @@
 
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require('path');
 
 /****************************************/
 /*******     CONFIG OBJECT      *********/
@@ -53,18 +54,32 @@ const rules = [];
 
 /*********************/
 
+// @rule: ES Lint
+
+const eslint = {
+    test: /\.js$/,
+    enforce: 'pre',
+    loader: 'eslint-loader',
+    options: {
+      emitWarning: true,
+    }
+};
+
+rules.push(eslint);
+
 // @rule: Babel
 const babel = {
-    test: /\.js$/, 
+    test: /\.js$/,
+    include: path.resolve(__dirname, 'src'),
     exclude: /node_modules/,
-    use: [
-        {
-            loader: 'babel-loader',
-            options: { presets: 
-                ['es2015'] //NEED TO USE WEBPACK MODULES INSTEAD
-            }       
+    use: [{
+        loader: 'babel-loader',
+            options: {
+              presets: [
+                ['es2015', { modules: false }]
+            ]   
         }
-    ]
+    }]
 };
 
 rules.push(babel);
@@ -150,28 +165,16 @@ WEBPACK_CONFIG.plugins = plugins;
 /********       OUTPUT        *******/
 /************************************/
 
-const developmentOutput = {
+const output = {
     output: {
           publicPath: '/',
           path: __dirname + "/dist",
-          filename: "scrollmap.js"
-    }
-};
-
-const productionOutput = {
-    output: {
-          publicPath: '/',
-          path: __dirname + "/dist",
-          filename: "scrollmap.min.js"
+          filename: isProduction ? "scrollmap.min.js" : "scrollmap.js"
     }
 };
 
 //extend properties to config
-if (isProduction) {
-    Object.assign(WEBPACK_CONFIG, productionOutput);
-} else {
-    Object.assign(WEBPACK_CONFIG, developmentOutput);
-}
+ Object.assign(WEBPACK_CONFIG, output);
 
 //export config
 module.exports = WEBPACK_CONFIG;
