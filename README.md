@@ -13,26 +13,25 @@ Using ES6:
 
 Using a CDN via jsDelivr:
 
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.4.0/dist/scrollmap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.4.0/dist/scrollmap.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.4.7/dist/scrollmap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.4.7/dist/scrollmap.js"></script>
 
 ********************************************
 
-##Method (trigger)
+##Method - trigger(options, callback)
 
 **Arguments**
 
 **target (string or element)**:
 Using querySelectorAll a target string selector is needed, or you can specify an actual element.
 
-**options (object)**: 
+**surfaceVisible (number)**: the percentage area, which is represented as a number from 0 - 1 is the area of the 
+element which is visible in the viewport. 
 
-  **surfaceVisible (number)**: the percentage area, which is represented as a number from 0 - 1 is the area of the 
-  element which is visible in the viewport. 
+**runOnScroll (boolean)** : by default the callback is run only one time whent the element is visible. By changing to true, the callback will be run 
+as long as the scroll event is happening.
 
-  **runOnScroll (boolean)** : by default the callback is run only one time. By changing to true, the callback will be run as long as the scroll event is happening.
-
-  **alwaysRunOnTrigger (boolean)**: by default the trigger callback will be executed only one time per being visible in the viewport. 
+**alwaysRunOnTrigger (boolean)**: by default the triggered element callback will only be executed one time. Setting to true will re-trigger the callback everytime the element has been in and out of the viewport. 
 
 **callback (object)**:
 This is the function which will be exectued when the element is detected in the viewport. To reference the node, pass it
@@ -40,45 +39,58 @@ into the callback as an argument.
 
 **EXAMPLE**
 
-	Scrollmap.trigger('.collection-list .items', {surfaceVisible: 0.5, runOnScroll: true, alwaysRunOnTrigger: true}, (element) => {
-	    $(element).addClass("visible");
+	Scrollmap.trigger({
+		target: '.collection-list .items',
+		surfaceVisible: 0.5,
+		runOnScroll: true,
+		alwaysRunOnTrigger: true
+	}, (element) => {
+		$(element).addClass("visible");
 	});
 	
 ********************************************
 
-##Method (sequence)
+##Method - sequence(options, callback)
 
 **EXAMPLE**
 		
-	Scrollmap.trigger(".boxes", { surfaceVisible: 0.2 }, (element) => {
+	Scrollmap.trigger({
+		target: ".boxes",
+		surfaceVisible: 0.2
+	}, (element) => {
 
-	    //define the array of the elements to sequence
+		//define the array of the elements to sequence
 
-	    const array = element.querySelectorAll(".box");
-	      
-	    //use the sequence method to define, interval and callback
-	    //function.
+		const array = element.querySelectorAll(".box");
 
-	    Scrollmap.sequence(array, {interval: 5}, (item) => {
+		//use the sequence method to define, interval and callback
+		//function.
 
-		  //add any code to be triggered when
-		  //the element is in the viewport
+		Scrollmap.sequence(array, {
+			interval: 5
+		}, (item) => {
 
-	      item.classList.add("color-change");
+			//add any code to be triggered when
+			//the element is in the viewport
 
-	  	});
+			item.classList.add("color-change");
+
+		});
 	});
 
 ********************************************
 
-##Method (out)
+##Method - out(function)
 
-When the trigger is has been executed and element is no longer in the viewport the out method
+When the trigger is has been executed and the element is no longer in the viewport, the out method
 can be chained to the trigger to execute the specified function.
 
 **EXAMPLE**
 
-	Scrollmap.trigger(".boxes", {surfaceVisible: 0.2}, (element) => {
+	Scrollmap.trigger({
+		target: ".boxes",
+		surfaceVisible: 0.2
+	}, (element) => {
 		element.classList.add("foo");
 	}).out((element) => {
 		element.classList.add("bar");
@@ -97,3 +109,6 @@ the value will be false.
 
 **data-scrollmap-triggered-in (boolean):**
 After element detection in viewport, a boolean will be set to true. False is set as default.
+
+**data-scrollmap-triggered-out (boolean):**
+After element detection is in and out of the viewport, a boolean will be set to true. False is set as default.

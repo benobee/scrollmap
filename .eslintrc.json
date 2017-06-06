@@ -52,7 +52,7 @@
         // Best Practices
         "complexity": [
             0,
-            0
+            1
         ],
         "consistent-return": 2,
         "curly": 2,
@@ -146,7 +146,7 @@
         "no-undef-init": 2,
         "no-undef": 2,
         "no-undefined": 1,
-        "no-unused-vars": 0,
+        "no-unused-vars": 2,
         "no-use-before-define": 0, // Switch to 2 ?
 
 
@@ -200,13 +200,17 @@
         "id-length": [
             2,
             {
-                "min": 1,
+                "min": 2,
                 "max": 37,
                 "properties": "never",
                 "exceptions": ["$", "e", "i", "j", "x", "y", "z"]
             }
         ],
         //"id-match": [2, "^[a-z]+([A-Z][a-z]+)*$", {"properties": false}],
+        "indent": [
+            0,
+            4
+        ],
         "key-spacing": [
             2,
             {
@@ -224,6 +228,10 @@
                 "allowBlockEnd": true
             }
         ],
+        "linebreak-style": [
+            2,
+            "windows"
+        ],
         "max-nested-callbacks": [
             2,
             2
@@ -239,13 +247,16 @@
         "no-inline-comments": 0,
         "no-lonely-if": 2,
         "no-mixed-spaces-and-tabs": [
-            0
+            2
         ],
         "no-multiple-empty-lines": 0,
         "no-nested-ternary": 1,
         "no-new-object": 2,
         "no-spaced-func": 2,
         "no-ternary": 0,
+        "no-trailing-spaces": [
+            2
+        ],
         "no-underscore-dangle": 0,
         "no-unneeded-ternary": 2,
         "object-curly-spacing": [
@@ -269,6 +280,10 @@
             2,
             "consistent-as-needed"
         ],
+        "quotes": [
+            1,
+            "double"
+        ],
         "semi-spacing": [
             2,
             {
@@ -289,6 +304,10 @@
             }
         ],
         "space-before-blocks": [
+            2,
+            "always"
+        ],
+        "space-before-function-paren": [
             2,
             "always"
         ],
@@ -345,7 +364,7 @@
         "prefer-const": 2,
         "prefer-spread": 2,
         "prefer-reflect": 0,
-        "prefer-template": 0,
+        "prefer-template": 2,
         "require-yield": 2
     }
 }

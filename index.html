@@ -11,10 +11,9 @@
 		font-family: 'Open Sans', sans-serif !important;
 	}
 	#page{
-		max-width:1400px;
+		max-width:100%;
 		margin:0 auto;
-		height:350vh;
-		padding-top:150px;
+		height:100vh;
 	}
 	.boxes{
 		display:flex;
@@ -25,8 +24,8 @@
 		justify-content: center;
 	}	
 	.box{
-		height:50px;
-		width:50px;
+		height:80px;
+		width:80px;
 		border:1px solid black;
 		background:lightgrey;
 		transition:1.5s;
@@ -43,7 +42,7 @@
 			transform:rotateZ(0deg) scale(0.2);
 		}
 		to{
-			transform: rotateZ(360deg) scale(0.8);
+			transform: rotateZ(1080deg) scale(0.8);
 		}
 	}
 </style>
@@ -285,15 +284,65 @@
 		<div class="box"></div>
 		<div class="box"></div>
 		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
 	</div>
-	<div class="cat"></div>
-	<div class="cat"></div>
-	<div class="cat"></div>
-	<div class="cat" style="left:0;top:10;position:absolute;"></div>
 </main>
 <script src="/scrollmap.js"></script>
 <script>
-Scrollmap.trigger(".boxes", {surfaceVisible: 0.2, alwaysRunOnTrigger: false }, (element) => {
+Scrollmap.trigger({target: '.boxes', surfaceVisible: 0.3 }, (element) => {
     //define the array of the elements to sequence
 
     const array = element.querySelectorAll(".box");
@@ -301,12 +350,12 @@ Scrollmap.trigger(".boxes", {surfaceVisible: 0.2, alwaysRunOnTrigger: false }, (
     //use the sequence method to define, interval and callback
     //function.
 
-    Scrollmap.sequence(array, {interval: 5}, (item) => {
+    Scrollmap.sequence(array, {interval: 2}, (item) => {
 
 	  //add any code to be triggered when
 	  //the element is in the viewport
 	  const style = {
-	  	animation: "spin 1.6s ease-in-out alternate infinite"
+	  	animation: "spin 3.2s ease-in-out alternate infinite"
 	  };
 
 	  item.setAttribute("style", JSON.stringify(style).replace(/,/g, ";").replace(/{/g, "").replace(/}/g, "").replace(/"/g, ""));
@@ -314,7 +363,6 @@ Scrollmap.trigger(".boxes", {surfaceVisible: 0.2, alwaysRunOnTrigger: false }, (
       item.classList.add("color-change");
 
   	});
-
 });
 
 </script>

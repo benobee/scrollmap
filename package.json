@@ -1,6 +1,6 @@
 {
   "name": "scrollmap",
-  "version": "1.4.0",
+  "version": "1.4.7",
   "description": "A module for testing if an element is visible in the viewport, then triggers callbacks on execution.",
   "main": "./src/scrollmap.js",
   "scripts": {
@@ -28,8 +28,13 @@
     "es6-promise": "^3.3.1",
     "eslint": "^3.17.1",
     "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-config-google": "^0.8.0",
+    "eslint-config-standard": "^10.2.1",
     "eslint-loader": "^1.6.3",
     "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "eslint-watch": "^3.0.1",
     "exports-loader": "^0.6.4",
     "extract-text-webpack-plugin": "^2.1.0",
