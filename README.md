@@ -52,6 +52,21 @@ into the callback as an argument.
 
 ##Method - sequence(options, callback)
 
+**Description**
+A method for staggering an array of triggers. 
+
+**Arguments**
+
+**options** (object):
+
+properties:
+
+interval: (number) :
+changes the interval speed of the sequence
+
+order: (string) :
+changes the order of the sequence. Order options are "random", and "reverse".
+
 **EXAMPLE**
 		
 	Scrollmap.trigger({
@@ -67,7 +82,8 @@ into the callback as an argument.
 		//function.
 
 		Scrollmap.sequence(array, {
-			interval: 5
+			interval: 5,
+			order: "random"
 		}, (item) => {
 
 			//add any code to be triggered when

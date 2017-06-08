@@ -22,6 +22,11 @@ class Scroll_Event_Trigger {
        * @desc run through an array of elements and apply a
        * staggered sequence delay
       */
+      array = Array.prototype.slice.call(array);
+
+      if (options.order) {
+          this.sequenceOrder(array, options.order);
+      }
 
       array.forEach((item, i) => {
           setTimeout(() => {
@@ -29,6 +34,26 @@ class Scroll_Event_Trigger {
           }, options.interval * i);
       });
       return this;
+    }
+    sequenceOrder (array, order) {
+
+      /*
+       * @desc randomize an array for a trigger sequence
+      */
+
+      switch (order) {
+          case "random" :
+            array = array.sort(() => {
+              return 0.5 - Math.random();
+            });
+            break;
+          case "reverse" :
+            array = array.reverse();
+            break;
+          default :
+
+      }
+      return array;
     }
     trigger (args, callback) {
 

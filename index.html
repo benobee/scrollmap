@@ -42,7 +42,7 @@
 			transform:rotateZ(0deg) scale(0.2);
 		}
 		to{
-			transform: rotateZ(1080deg) scale(0.8);
+			transform: rotateZ(1080deg) scale(0.9);
 		}
 	}
 </style>
@@ -350,7 +350,7 @@ Scrollmap.trigger({target: '.boxes', surfaceVisible: 0.3 }, (element) => {
     //use the sequence method to define, interval and callback
     //function.
 
-    Scrollmap.sequence(array, {interval: 2}, (item) => {
+    Scrollmap.sequence(array, {interval: 2, order: "reverse"}, (item) => {
 
 	  //add any code to be triggered when
 	  //the element is in the viewport
