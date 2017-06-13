@@ -1,14 +1,14 @@
 {
   "name": "scrollmap",
-  "version": "1.4.8",
+  "version": "1.6.4",
   "description": "A module for testing if an element is visible in the viewport, then triggers callbacks on execution.",
-  "main": "./src/scrollmap.js",
+  "main": "./dist/scrollmap.js",
   "scripts": {
-    "test": "mocha",
     "start": "set PROD_ENV=false&&webpack --progress --colors --watch",
     "watch": "./node_modules/.bin/webpack -d --watch --colors",
-    "build": "set PROD_ENV=false&&webpack&&set PROD_ENV=true&&webpack",
+    "build": "set PROD_ENV=true&&babel src -d dist",
     "dev": "set PROD_ENV=false&&webpack-dev-server ./src/scrollmap.js --hot --watch --colors",
+    "cdn" : "set PROD_ENV=false&&webpack&&set PROD_ENV=true&&webpack -p",
     "lint": "eslint src"
   },
   "repository": {
@@ -24,6 +24,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-es2015": "^6.22.0",
+    "babel-preset-latest": "^6.24.1",
     "babel-runtime": "^6.23.0",
     "es6-promise": "^3.3.1",
     "eslint": "^3.17.1",
@@ -44,6 +45,9 @@
     "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2"
+  },
+  "babel": {
+      "presets": ["latest"]
   },
   "keywords": [
     "element",

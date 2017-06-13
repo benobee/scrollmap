@@ -6,16 +6,16 @@ import Trigger from "./trigger";
    * elements are visible
   */
 
-class Scroll_Event_Trigger {
-    constructor () {
+const Scrollmap = {
+    init () {
         this.lastScrollTop = 0;
         this.points = [];
         this.events();
-    }
+    },
     out (args) {
         this.onTriggerOut = args;
         return this;
-    }
+    },
     sequence (array, options, func) {
 
       /*
@@ -24,17 +24,26 @@ class Scroll_Event_Trigger {
       */
       array = Array.prototype.slice.call(array);
 
+      let delay = 0;
+
       if (options.order) {
           this.sequenceOrder(array, options.order);
       }
 
-      array.forEach((item, i) => {
+      if (options.delay) {
+          delay = options.delay;
+      }
+
+      const run = array.forEach((item, i) => {
           setTimeout(() => {
-              func(array[ i ]);
+              func(array[ i ], i);
           }, options.interval * i);
       });
+
+      setTimeout(run, delay);
+
       return this;
-    }
+    },
     sequenceOrder (array, order) {
 
       /*
@@ -54,7 +63,7 @@ class Scroll_Event_Trigger {
 
       }
       return array;
-    }
+    },
     trigger (args, callback) {
 
       /*
@@ -73,6 +82,9 @@ class Scroll_Event_Trigger {
           default:
               el = document.querySelectorAll(el);
       }
+
+      el = this.toArray(el);
+
       el.forEach((node) => {
           node.setAttribute("data-scrollmap-loaded", true);
           node.setAttribute("data-scrollmap-triggered-in", false);
@@ -82,7 +94,33 @@ class Scroll_Event_Trigger {
           this.points.push(point);
       });
       return this;
-    }
+    },
+    toArray (collection) {
+        return Array.prototype.slice.call(collection);
+    },
+    setTriggerIn (point) {
+        point.element.setAttribute("data-scrollmap-is-visible", true);
+        point.element.setAttribute("data-scrollmap-triggered-in", true);
+
+        if (!point.triggeredIn) {
+            point.onTriggerIn();
+            if (point.runOnScroll === false) {
+                point.triggeredIn = true;
+            }
+        }
+    },
+    setTriggerOut (point) {
+        point.element.setAttribute("data-scrollmap-is-visible", false);
+        point.element.setAttribute("data-scrollmap-triggered-out", true);
+        if (point.alwaysRunOnTrigger === true) {
+            point.triggeredIn = false;
+            point.element.setAttribute("data-scrollmap-triggered-in", false);
+        }
+        if (this.onTriggerOut && !point.triggeredOut && point.triggeredIn) {
+            this.onTriggerOut(point);
+            point.triggeredOut = true;
+        }
+    },
     elementInViewport (el, percetageOfElement) {
 
       /*
@@ -110,7 +148,7 @@ class Scroll_Event_Trigger {
           return true;
       }
       return false;
-    }
+    },
     checkVisible (point) {
       const viewport = this.elementInViewport(point.element, point.surfaceVisible);
 
@@ -119,30 +157,7 @@ class Scroll_Event_Trigger {
       } else {
           this.setTriggerOut(point);
       }
-    }
-    setTriggerIn (point) {
-        point.element.setAttribute("data-scrollmap-is-visible", true);
-        point.element.setAttribute("data-scrollmap-triggered-in", true);
-
-        if (!point.triggeredIn) {
-            point.onTriggerIn();
-            if (point.runOnScroll === false) {
-                point.triggeredIn = true;
-            }
-        }
-    }
-    setTriggerOut (point) {
-        point.element.setAttribute("data-scrollmap-is-visible", false);
-        point.element.setAttribute("data-scrollmap-triggered-out", true);
-        if (point.alwaysRunOnTrigger === true) {
-            point.triggeredIn = false;
-            point.element.setAttribute("data-scrollmap-triggered-in", false);
-        }
-        if (this.onTriggerOut && !point.triggeredOut && point.triggeredIn) {
-            this.onTriggerOut(point);
-            point.triggeredOut = true;
-        }
-    }
+    },
     on (string, callback) {
         /*
          * methods for creating various listeners
@@ -156,7 +171,7 @@ class Scroll_Event_Trigger {
             callback();
         }
         return this;
-    }
+    },
     scrollDirection () {
         /*
          * return the scroll direction via a string value
@@ -171,14 +186,15 @@ class Scroll_Event_Trigger {
          }
          this.lastScrollTop = st;
          return direction;
-    }
+    },
     events () {
       // initial check on page load to see if elements are visible
-      window.onload = () => {
+      window.addEventListener('load', () => {
         this.points.forEach((point) => {
           this.checkVisible(point);
         });
-      };
+      }, false);
+
       // check for visible elements on scroll
       window.addEventListener("scroll", () => {
         this.scrollOrient = this.scrollDirection();
@@ -187,9 +203,9 @@ class Scroll_Event_Trigger {
         });
       });
     }
-}
+};
 
-const Scrollmap = new Scroll_Event_Trigger();
+Scrollmap.init();
 
 window.Scrollmap = Scrollmap;
 

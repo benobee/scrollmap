@@ -59,13 +59,14 @@ const rules = [];
 const eslint = {
     test: /\.js$/,
     enforce: 'pre',
+    exclude: /dist/,
     loader: 'eslint-loader',
     options: {
       emitWarning: true,
     }
 };
 
-rules.push(eslint);
+//rules.push(eslint);
 
 // @rule: Babel
 const babel = {
@@ -151,7 +152,6 @@ const minify = new webpack.optimize.UglifyJsPlugin({
     minify: true,
 });
 
-
 //if production is set, js will be minified
 
 if (isProduction) {
@@ -168,7 +168,7 @@ WEBPACK_CONFIG.plugins = plugins;
 const output = {
     output: {
           publicPath: '/',
-          path: __dirname + "/dist",
+          path: __dirname + "/cdn",
           filename: isProduction ? "scrollmap.min.js" : "scrollmap.js"
     }
 };

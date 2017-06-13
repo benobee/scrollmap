@@ -1,1 +1,1 @@
-module.exports = require('./dist/scrollmap.min.js');
+module.exports = require('./dist/scrollmap.js');

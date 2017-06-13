@@ -20,7 +20,10 @@ Using a CDN via jsDelivr:
 
 ##Method - trigger(options, callback)
 
-**Arguments**
+**Description:**
+ A method for adding triggers when element is visible in the viewport. 
+
+**Properties for options config object:**
 
 **target (string or element)**:
 Using querySelectorAll a target string selector is needed, or you can specify an actual element.
@@ -52,20 +55,19 @@ into the callback as an argument.
 
 ##Method - sequence(options, callback)
 
-**Description**
-A method for staggering an array of triggers. 
+**Description:**
+ A method for staggering an array of triggers. 
 
-**Arguments**
+**Properties for options config object:**
 
-**options** (object):
-
-properties:
-
-interval: (number) :
+**interval: (number)** :
 changes the interval speed of the sequence
 
-order: (string) :
+**order: (string)** :
 changes the order of the sequence. Order options are "random", and "reverse".
+
+callback (item, index):
+can get the item and index of the array as arguments
 
 **EXAMPLE**
 		
