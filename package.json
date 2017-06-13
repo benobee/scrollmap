@@ -1,6 +1,6 @@
 {
   "name": "scrollmap",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "A module for testing if an element is visible in the viewport, then triggers callbacks on execution.",
   "main": "./dist/scrollmap.js",
   "scripts": {
