@@ -6,16 +6,16 @@ import Trigger from "./trigger";
    * elements are visible
   */
 
-const Scrollmap = {
-    init () {
+class Scroll_Event_Trigger {
+    constructor () {
         this.lastScrollTop = 0;
         this.points = [];
         this.events();
-    },
+    }
     out (args) {
         this.onTriggerOut = args;
         return this;
-    },
+    }
     sequence (array, options, func) {
 
       /*
@@ -43,7 +43,7 @@ const Scrollmap = {
       setTimeout(run, delay);
 
       return this;
-    },
+    }
     sequenceOrder (array, order) {
 
       /*
@@ -63,7 +63,7 @@ const Scrollmap = {
 
       }
       return array;
-    },
+    }
     trigger (args, callback) {
 
       /*
@@ -94,10 +94,10 @@ const Scrollmap = {
           this.points.push(point);
       });
       return this;
-    },
+    }
     toArray (collection) {
         return Array.prototype.slice.call(collection);
-    },
+    }
     setTriggerIn (point) {
         point.element.setAttribute("data-scrollmap-is-visible", true);
         point.element.setAttribute("data-scrollmap-triggered-in", true);
@@ -108,7 +108,7 @@ const Scrollmap = {
                 point.triggeredIn = true;
             }
         }
-    },
+    }
     setTriggerOut (point) {
         point.element.setAttribute("data-scrollmap-is-visible", false);
         point.element.setAttribute("data-scrollmap-triggered-out", true);
@@ -120,7 +120,7 @@ const Scrollmap = {
             this.onTriggerOut(point);
             point.triggeredOut = true;
         }
-    },
+    }
     elementInViewport (el, percetageOfElement) {
 
       /*
@@ -148,7 +148,7 @@ const Scrollmap = {
           return true;
       }
       return false;
-    },
+    }
     checkVisible (point) {
       const viewport = this.elementInViewport(point.element, point.surfaceVisible);
 
@@ -157,7 +157,7 @@ const Scrollmap = {
       } else {
           this.setTriggerOut(point);
       }
-    },
+    }
     on (string, callback) {
         /*
          * methods for creating various listeners
@@ -171,7 +171,7 @@ const Scrollmap = {
             callback();
         }
         return this;
-    },
+    }
     scrollDirection () {
         /*
          * return the scroll direction via a string value
@@ -186,7 +186,7 @@ const Scrollmap = {
          }
          this.lastScrollTop = st;
          return direction;
-    },
+    }
     events () {
       // initial check on page load to see if elements are visible
       window.addEventListener('load', () => {
@@ -205,7 +205,7 @@ const Scrollmap = {
     }
 };
 
-Scrollmap.init();
+const Scrollmap = new Scroll_Event_Trigger();
 
 window.Scrollmap = Scrollmap;
 
