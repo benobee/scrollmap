@@ -135,7 +135,11 @@ var Scroll_Event_Trigger = function () {
             point.element.setAttribute("data-scrollmap-triggered-in", true);
 
             if (!point.triggeredIn) {
-                point.onTriggerIn();
+
+                if (point.callback) {
+                    point.onTriggerIn();
+                }
+
                 if (point.runOnScroll === false) {
                     point.triggeredIn = true;
                 }

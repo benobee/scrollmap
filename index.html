@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="/scrollmap.js"></script>
 <link rel="stylesheet" type="text/css" href="/bundle.css">
 <title>ITEMS</title>
 <style type="text/css">
@@ -17,29 +18,10 @@
 			opacity:0.1;
 		}
 		99% {
-			background-color:green;
 			opacity:0.2;
 		}
 		100% {
 			opacity:0.5;
-			background-color:green;
-		}
-	}
-
-	@keyframes pulse {
-		from {
-			background-color:antiqueWhite;
-		}
-		to{
-			background-color:firebrick;
-		}
-	}
-	@keyframes pulseInverse {
-		from {
-			background-color:firebrick;
-		}
-		to{
-			background-color:DARKCYAN;			
 		}
 	}
 	body{
@@ -53,26 +35,22 @@
 		margin:0 auto;
 		height:100vh;
 		overflow:hidden;
+		display:flex;
+		justify-content: center;
+		align-items:center;
 	}
 	.boxes{
 		display:flex;
-		align-items:center;
-		background:none;
-		margin:0 auto;
 		flex-wrap:wrap;
-		justify-content: center;
-		opacity:0.6;
-		animation:pulse 10s alternate ease-in-out infinite; 
+		background:none;
+		width:800px;
 	}	
 	.box{
-		height:40px;
-		width:40px;
-		border:2px solid #e5e5e5;
+		height:80px;
+		width:80px;
 		background:none;
-		transition:1.5s;
 		border-radius:50%;
 		background-color:antiqueWhite;
-		animation:pulseInverse 10s alternate ease-in-out infinite; 
 	}
 	.fly{
 		background:#11fffb;
@@ -80,8 +58,10 @@
 	}
 	.color-change{
 		border:1px solid red;
-		background:red;
-		filter:blur(8px);
+		background:firebrick;
+	}
+	.black {
+		background:black;
 	}
 </style>
 </head>
@@ -89,9 +69,6 @@
 <main id="page">
 	<div class="boxes"></div>
 </main>
-<script src="dist/scrollmap.js"></script>
-<script>
-console.log(Scrollmap);
-</script>
+
 </body>
 </html>

@@ -75,13 +75,7 @@ can get the item and index of the array as arguments
 		target: ".boxes",
 		surfaceVisible: 0.2
 	}, (element) => {
-
-		//define the array of the elements to sequence
-
 		const array = element.querySelectorAll(".box");
-
-		//use the sequence method to define, interval and callback
-		//function.
 
 		Scrollmap.sequence(array, {
 			interval: 5,
