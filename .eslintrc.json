@@ -230,7 +230,7 @@
         ],
         "linebreak-style": [
             2,
-            "windows"
+            "unix"
         ],
         "max-nested-callbacks": [
             2,
