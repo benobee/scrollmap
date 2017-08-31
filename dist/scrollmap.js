@@ -20,7 +20,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @namespace scrollMap
  * @description store element points and check if
  * elements are visible
-*/
+ */
 
 var Scroll_Event_Trigger = function () {
     function Scroll_Event_Trigger() {
@@ -157,7 +157,7 @@ var Scroll_Event_Trigger = function () {
         }
     }, {
         key: "elementInViewport",
-        value: function elementInViewport(el, percetageOfElement) {
+        value: function elementInViewport(el, percetageOfElement, treshold) {
 
             /*
              * @desc check if element is in viewport
@@ -173,7 +173,7 @@ var Scroll_Event_Trigger = function () {
             var rect = el.getBoundingClientRect();
 
             var stats = {
-                top: rect.top - window.innerHeight,
+                top: rect.top - window.innerHeight + treshold,
                 bottom: rect.bottom + rect.height,
                 height: rect.height
             };
@@ -188,7 +188,7 @@ var Scroll_Event_Trigger = function () {
     }, {
         key: "checkVisible",
         value: function checkVisible(point) {
-            var viewport = this.elementInViewport(point.element, point.surfaceVisible);
+            var viewport = this.elementInViewport(point.element, point.surfaceVisible, point.treshold);
 
             if (viewport) {
                 this.setTriggerIn(point);
@@ -234,8 +234,20 @@ var Scroll_Event_Trigger = function () {
         value: function events() {
             var _this2 = this;
 
+            var supportsPassive = false;
+
+            try {
+                var opts = Object.defineProperty({}, "passive", {
+                    get: function get() {
+                        supportsPassive = true;
+                    }
+                });
+
+                window.addEventListener("test", null, opts);
+            } catch (e) {} // eslint-disable-line no-empty
+
             // initial check on page load to see if elements are visible
-            window.addEventListener('load', function () {
+            window.addEventListener("load", function () {
                 _this2.points.forEach(function (point) {
                     _this2.checkVisible(point);
                 });
@@ -247,14 +259,12 @@ var Scroll_Event_Trigger = function () {
                 _this2.points.forEach(function (point) {
                     _this2.checkVisible(point);
                 });
-            });
+            }, supportsPassive ? { passive: true } : false);
         }
     }]);
 
     return Scroll_Event_Trigger;
 }();
-
-;
 
 var Scrollmap = new Scroll_Event_Trigger();
 

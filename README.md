@@ -9,16 +9,20 @@ A module for testing if a DOM element is visible in the viewport, then triggers 
 
 Using ES6:
 
-	import Scrollmap from 'scrollmap';
+```javascript
+import Scrollmap from 'scrollmap';
+```
 
 Using a CDN via jsDelivr:
 
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.6.5/cdn/scrollmap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.6.5/cdn/scrollmap.js"></script>
+```html
+<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.6.5/cdn/scrollmap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.6.5/cdn/scrollmap.js"></script>
+```
 
 ********************************************
 
-##Method - trigger(options, callback)
+## Method - trigger(options, callback)
 
 **Description:**
  A method for adding triggers when element is visible in the viewport. 
@@ -36,24 +40,29 @@ as long as the scroll event is happening.
 
 **alwaysRunOnTrigger (boolean)**: by default the triggered element callback will only be executed one time. Setting to true will re-trigger the callback everytime the element has been in and out of the viewport. 
 
+**treshold (number)**: add this much pixels to calculation to the visibility check (useful if you want to execute code just before the element becomes visible) 
+
 **callback (object)**:
 This is the function which will be exectued when the element is detected in the viewport. To reference the node, pass it
 into the callback as an argument.
 
 **EXAMPLE**
 
-	Scrollmap.trigger({
-		target: '.collection-list .items',
-		surfaceVisible: 0.5,
-		runOnScroll: true,
-		alwaysRunOnTrigger: true
-	}, (element) => {
-		$(element).addClass("visible");
-	});
+```javascript
+Scrollmap.trigger({
+    target: '.collection-list .items',
+    surfaceVisible: 0.5,
+    runOnScroll: true,
+    alwaysRunOnTrigger: true,
+    treshold: 200
+}, (element) => {
+    $(element).addClass("visible");
+});
+```
 	
 ********************************************
 
-##Method - sequence(options, callback)
+## Method - sequence(options, callback)
 
 **Description:**
  A method for staggering an array of triggers. 
@@ -71,52 +80,55 @@ can get the item and index of the array as arguments
 
 **EXAMPLE**
 		
-	Scrollmap.trigger({
-		target: ".boxes",
-		surfaceVisible: 0.2
-	}, (element) => {
+```javascript
+Scrollmap.trigger({
+    target: ".boxes",
+    surfaceVisible: 0.2
+}, (element) => {
 
-		//define the array of the elements to sequence
+    //define the array of the elements to sequence
 
-		const array = element.querySelectorAll(".box");
+    const array = element.querySelectorAll(".box");
 
-		//use the sequence method to define, interval and callback
-		//function.
+    //use the sequence method to define, interval and callback
+    //function.
 
-		Scrollmap.sequence(array, {
-			interval: 5,
-			order: "random"
-		}, (item) => {
+    Scrollmap.sequence(array, {
+        interval: 5,
+        order: "random"
+    }, (item) => {
 
-			//add any code to be triggered when
-			//the element is in the viewport
+        //add any code to be triggered when
+        //the element is in the viewport
 
-			item.classList.add("color-change");
+        item.classList.add("color-change");
 
-		});
-	});
+    });
+});
+```
 
 ********************************************
 
-##Method - out(function)
+## Method - out(function)
 
 When the trigger is has been executed and the element is no longer in the viewport, the out method
 can be chained to the trigger to execute the specified function.
 
 **EXAMPLE**
 
-	Scrollmap.trigger({
-		target: ".boxes",
-		surfaceVisible: 0.2
-	}, (element) => {
-		element.classList.add("foo");
-	}).out((element) => {
-		element.classList.add("bar");
-	});
-
+```javascript
+Scrollmap.trigger({
+    target: ".boxes",
+    surfaceVisible: 0.2
+}, (element) => {
+    element.classList.add("foo");
+}).out((element) => {
+    element.classList.add("bar");
+});
+```
 ********************************************
 
-##Hooks
+## Hooks
 
 **data-scrollmap-loaded (boolean):**
 Once the element is initialized.
