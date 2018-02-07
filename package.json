@@ -1,7 +1,7 @@
 {
-  "name": "scrollmap_ie11",
+  "name": "scrollmap-fork-ie11",
   "version": "1.6.6",
-  "description": "For of benobee's scrollmap with ie11 support",
+  "description": "Fork of benobee's scrollmap with ie11 support",
   "main": "./dist/scrollmap.js",
   "scripts": {
     "start": "set PROD_ENV=false&&webpack --progress --colors --watch",
