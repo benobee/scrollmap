@@ -1,7 +1,7 @@
 {
-  "name": "scrollmap",
+  "name": "scrollmap_ie11",
   "version": "1.6.6",
-  "description": "A module for testing if an element is visible in the viewport, then triggers callbacks on execution.",
+  "description": "For of benobee's scrollmap with ie11 support",
   "main": "./dist/scrollmap.js",
   "scripts": {
     "start": "set PROD_ENV=false&&webpack --progress --colors --watch",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/benobee/scrollmap"
+    "url": "git+https://github.com/prkirby/scrollmap"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -61,6 +61,6 @@
     "viewable",
     "animation"
   ],
-  "author": "Ben Obee",
+  "author": "Paul Kirby",
   "license": "ISC"
 }
