@@ -1,5 +1,5 @@
 {
-  "name": "scrollmap-fork-ie11",
+  "name": "scrollmap-ie-fork",
   "version": "1.6.6",
   "description": "Fork of benobee's scrollmap with ie11 support",
   "main": "./dist/scrollmap.js",
