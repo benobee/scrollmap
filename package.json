@@ -7,7 +7,7 @@
     "start": "set PROD_ENV=false&&webpack --progress --colors --watch",
     "watch": "./node_modules/.bin/webpack -d --watch --colors",
     "build": "set PROD_ENV=true&&babel src -d dist",
-    "dev": "set PROD_ENV=false&&webpack-dev-server ./src/scrollmap.js --hot --watch --colors",
+    "dev": "set PROD_ENV=false&&webpack-dev-server ./test/test.js --hot --watch --colors",
     "cdn": "set PROD_ENV=false&&webpack&&set PROD_ENV=true&&webpack -p",
     "lint": "eslint src"
   },
