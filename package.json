@@ -61,6 +61,7 @@
     "viewable",
     "animation"
   ],
-  "author": "Paul Kirby",
-  "license": "ISC"
+  "author": "Ben Obee",
+  "license": "ISC",
+  "dependencies": {}
 }
