@@ -1,5 +1,4 @@
 import Trigger from "./trigger";
-import PubSub from "./pubsub";
 
 /**
  * A module for testing if a DOM element is visible in the 
@@ -7,17 +6,14 @@ import PubSub from "./pubsub";
  * @namespace ScrollMap 
  */
 
-const events = new PubSub();
-
 class Scroll_Event_Trigger {
     constructor() {
         this.lastScrollTop = 0;
         this.points = [];
         this.topics = {};
-        this.bindEventListeners();
     }
 
-    subscribe (topic, data) {
+    emit (topic, data) {
         // return if the topic doesn't exist, or there are no listeners
         if (!this.topics[ topic ] || this.topics[ topic ].length < 1) {
             return;
@@ -27,7 +23,7 @@ class Scroll_Event_Trigger {
         this.topics[ topic ].forEach((listener) => listener(data || {}));
     }
 
-    publish (topic, listener) {
+    on (topic, listener) {
         // create the topic if not yet created
         if (!this.topics[ topic ]) {
             this.topics[ topic ] = [];
@@ -35,19 +31,6 @@ class Scroll_Event_Trigger {
 
         // add the listener
         this.topics[ topic ].push(listener);
-    }
-
-    /**
-     * When the trigger is has been executed and the element is no longer in 
-     * the viewport, the out method can be chained to the trigger to execute 
-     * the specified function.
-     * @param  {Object} args 
-     * @return {Object}      returns the parent object for use in method chaining
-     */
-
-    out(args) {
-        this.onTriggerOut = args;
-        return this;
     }
 
     /**
@@ -211,13 +194,15 @@ class Scroll_Event_Trigger {
     setTriggerIn(point) {
         point.element.setAttribute("data-scrollmap-is-visible", true);
         point.element.setAttribute("data-scrollmap-triggered-in", true);
-
-        if (!point.triggeredIn) {
+        if (!point.isVisible && !point.hasBeenVisible) {
             if (point.callback) {
+                if (!point.alwaysRunOnTrigger) {
+                    point.hasBeenVisible = true;
+                }
                 point.onTriggerIn();
             }
-            if (point.runOnScroll === false) {
-                point.triggeredIn = true;
+            if (!point.runOnScroll) {
+                point.isVisible = true;
             }
         }
     }
@@ -232,13 +217,9 @@ class Scroll_Event_Trigger {
     setTriggerOut(point) {
         point.element.setAttribute("data-scrollmap-is-visible", false);
         point.element.setAttribute("data-scrollmap-triggered-out", true);
-        if (point.alwaysRunOnTrigger === true) {
-            point.triggeredIn = false;
+        point.isVisible = false;
+        if (point.alwaysRunOnTrigger) {
             point.element.setAttribute("data-scrollmap-triggered-in", false);
-        }
-        if (this.onTriggerOut && !point.triggeredOut && point.triggeredIn) {
-            this.onTriggerOut(point);
-            point.triggeredOut = true;
         }
     }
 
@@ -290,9 +271,9 @@ class Scroll_Event_Trigger {
         const st = window.pageYOffset || document.documentElement.scrollTop;
 
         if (st > this.lastScrollTop) {
-            direction = "Down";
+            direction = "scrollDown";
         } else {
-            direction = "Up";
+            direction = "scrollUp";
         }
         this.lastScrollTop = st;
 
@@ -307,6 +288,7 @@ class Scroll_Event_Trigger {
     bindEventListeners() {
         // initial check on page load to see if elements are visible
         window.addEventListener('load', () => {
+            console.log(this)
             this.points.forEach((point) => {
                 this.checkVisible(point);
             });
@@ -315,15 +297,17 @@ class Scroll_Event_Trigger {
         // check for visible elements on scroll
         window.addEventListener("scroll", () => {
             this.scrollOrient = this.scrollDirection();
+            this.emit(this.scrollOrient);
             this.points.forEach((point) => {
                 this.checkVisible(point);
-                console.log(point)
             });
         });
     }
 };
 
 const Scrollmap = new Scroll_Event_Trigger();
+
+Scrollmap.bindEventListeners();
 
 window.Scrollmap = Scrollmap;
 

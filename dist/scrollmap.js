@@ -17,10 +17,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * @namespace scrollMap
- * @description store element points and check if
- * elements are visible
-*/
+ * A module for testing if a DOM element is visible in the 
+ * viewport, then triggers callbacks on execution.
+ * @namespace ScrollMap 
+ */
 
 var Scroll_Event_Trigger = function () {
     function Scroll_Event_Trigger() {
@@ -28,23 +28,58 @@ var Scroll_Event_Trigger = function () {
 
         this.lastScrollTop = 0;
         this.points = [];
-        this.events();
+        this.topics = {};
     }
 
     _createClass(Scroll_Event_Trigger, [{
-        key: "out",
-        value: function out(args) {
-            this.onTriggerOut = args;
-            return this;
+        key: "emit",
+        value: function emit(topic, data) {
+            // return if the topic doesn't exist, or there are no listeners
+            if (!this.topics[topic] || this.topics[topic].length < 1) {
+                return;
+            }
+
+            // send the event to all listeners
+            this.topics[topic].forEach(function (listener) {
+                return listener(data || {});
+            });
         }
+    }, {
+        key: "on",
+        value: function on(topic, listener) {
+            // create the topic if not yet created
+            if (!this.topics[topic]) {
+                this.topics[topic] = [];
+            }
+
+            // add the listener
+            this.topics[topic].push(listener);
+        }
+
+        /**
+         * A method for staggering an array of triggers. 
+         *
+         * Properties for options config object:
+         *
+         * interval: (number) :
+         * changes the interval speed of the sequence
+         *
+         * order: (string) :
+         * changes the order of the sequence. Order options are "random", and "reverse".
+         *
+         * callback (item, index):
+         * can get the item and index of the array as arguments
+         *
+         * @param  {Array} array   
+         * @param  {Object} options
+         * @param  {Function} func  
+         * @memberOf Scrollmap  
+         * @return {Object}         
+         */
+
     }, {
         key: "sequence",
         value: function sequence(array, options, func) {
-
-            /*
-             * @desc run through an array of elements and apply a
-             * staggered sequence delay
-            */
             array = Array.prototype.slice.call(array);
 
             var delay = 0;
@@ -67,14 +102,19 @@ var Scroll_Event_Trigger = function () {
 
             return this;
         }
+
+        /**
+         * The method which executes the the desired
+         * sequence method based on the arguments
+         * @param  {Array} array
+         * @param  {String} order
+         * @memberOf Scrollmap 
+         * @return {Array}
+         */
+
     }, {
         key: "sequenceOrder",
         value: function sequenceOrder(array, order) {
-
-            /*
-             * @desc randomize an array for a trigger sequence
-            */
-
             switch (order) {
                 case "random":
                     array = array.sort(function () {
@@ -89,31 +129,57 @@ var Scroll_Event_Trigger = function () {
             }
             return array;
         }
+
+        /**
+         * A method for adding triggers when element is visible in the viewport. 
+         *
+         * Properties for options config object:
+         * target (string or element): Using querySelectorAll a target string selector 
+         * is needed, or you can specify an actual element.
+         *
+         * surfaceVisible (number): the percentage area, which is represented as a 
+         * number from 0 - 1 is the area of the which is visible in the viewport.
+         *
+         * runOnScroll (boolean) : by default the callback is run only one time whent 
+         * the element is visible. By changing to true, the callback will be run 
+         * as long as the scroll event is happening.
+         *
+         * alwaysRunOnTrigger (boolean): by default the triggered element callback
+         * will only be executed one time. Setting to true will re-trigger thcallback 
+         * everytime the element has been in and out of the viewport.
+         *
+         * callback (object):
+         * This is the function which will be exectued when the element is detected
+         * in the viewport. To reference the node, pass it into the callback as an argument.
+         *
+         * @param  {Object}   args     options for callback triggering
+         * @param  {Function} callback the method executed based on the argments
+         * @memberOf Scrollmap
+         */
+
     }, {
         key: "trigger",
         value: function trigger(args, callback) {
             var _this = this;
 
-            /*
-             * @desc add classname indicating element is intialized
-            */
-
             var el = args.target;
 
-            switch (typeof el === "undefined" ? "undefined" : _typeof(el)) {
-                case "string":
-                    el = document.querySelectorAll(el);
-                    break;
-                case "object":
-                    el = [el];
-                    break;
-                default:
-                    el = document.querySelectorAll(el);
+            var triggerElementSelector = args.triggerElement;
+
+            if (args.triggerElement) {
+                args.triggerElement = this.checkSelector(args.triggerElement);
             }
 
-            el = this.toArray(el);
+            el = this.checkSelector(el);
 
-            el.forEach(function (node) {
+            function _id(i) {
+                return '_' + (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)) + '_' + i;
+            }
+
+            el.forEach(function (node, i) {
+                node.setAttribute("data-scrollmap-id", _id(i));
+                args.triggerElement ? node.setAttribute("data-scrollmap-trigger-element", triggerElementSelector) : false;
+                args.transition ? node.setAttribute("data-scrollmap-transition", args.transition) : false;
                 node.setAttribute("data-scrollmap-loaded", true);
                 node.setAttribute("data-scrollmap-triggered-in", false);
                 node.setAttribute("data-scrollmap-triggered-out", false);
@@ -124,122 +190,152 @@ var Scroll_Event_Trigger = function () {
             return this;
         }
     }, {
+        key: "checkSelector",
+        value: function checkSelector(target) {
+            switch (typeof target === "undefined" ? "undefined" : _typeof(target)) {
+                case "string":
+                    target = this.toArray(document.querySelectorAll(target));
+                    break;
+                case "object":
+                    target = [target];
+                    break;
+                default:
+                    target = this.toArray(document.querySelectorAll(target));
+            }
+
+            return target;
+        }
+
+        /**
+         * creates a true array from collection of elements
+         * @param  {HTMLElement} collection 
+         * @memberOf Scrollmap 
+         * @return {Array}            returns the converted node list.
+         */
+
+    }, {
         key: "toArray",
         value: function toArray(collection) {
             return Array.prototype.slice.call(collection);
         }
+
+        /**
+         * sets points with data hooks and runs callback method  
+         * @memberOf Scrollmap 
+         * @param {Object} point 
+         */
+
     }, {
         key: "setTriggerIn",
         value: function setTriggerIn(point) {
             point.element.setAttribute("data-scrollmap-is-visible", true);
             point.element.setAttribute("data-scrollmap-triggered-in", true);
-
-            if (!point.triggeredIn) {
-
+            if (!point.isVisible && !point.hasBeenVisible) {
                 if (point.callback) {
+                    if (!point.alwaysRunOnTrigger) {
+                        point.hasBeenVisible = true;
+                    }
                     point.onTriggerIn();
                 }
-
-                if (point.runOnScroll === false) {
-                    point.triggeredIn = true;
+                if (!point.runOnScroll) {
+                    point.isVisible = true;
                 }
             }
         }
+
+        /**
+         * Attaches various data attributes to the initailized
+         * DOM element. This is useful for doing CSS hooks.
+         * @param {Object} point the point in the index to be mututated.
+         * @memberOf Scrollmap 
+         */
+
     }, {
         key: "setTriggerOut",
         value: function setTriggerOut(point) {
             point.element.setAttribute("data-scrollmap-is-visible", false);
             point.element.setAttribute("data-scrollmap-triggered-out", true);
-            if (point.alwaysRunOnTrigger === true) {
-                point.triggeredIn = false;
+            point.isVisible = false;
+            if (point.alwaysRunOnTrigger) {
                 point.element.setAttribute("data-scrollmap-triggered-in", false);
             }
-            if (this.onTriggerOut && !point.triggeredOut && point.triggeredIn) {
-                this.onTriggerOut(point);
-                point.triggeredOut = true;
-            }
         }
+
+        /**
+         * look for direction of scroll and base element visible
+         * percentage off of either top bottom when scrolling
+         * down, or the top when scrolling up.
+         * 
+         * @param  {DOM} el                 the trigger element
+         * @param  {Number} percetageOfElement the option value for percent of element viewable in the viewport
+         * @return {Bool}                    if element is not in the viewport we return false
+         * @memberOf Scrollmap 
+         */
+
     }, {
         key: "elementInViewport",
         value: function elementInViewport(el, percetageOfElement) {
-
-            /*
-             * @desc check if element is in viewport
-            */
-
-            /*
-             * look for direction of scroll and base element visible
-             * percentage off of either top bottom when scrolling
-             * down, or the top when scrolling up. This may not be
-             * the perfect method but is cross browser compatible.
-            */
-
             var rect = el.getBoundingClientRect();
-
             var stats = {
                 top: rect.top - window.innerHeight,
                 bottom: rect.bottom + rect.height,
                 height: rect.height
             };
-
             var amount = stats.height * percetageOfElement;
 
             if (stats.bottom - amount > stats.height && stats.top + amount < 0) {
                 return true;
             }
+
             return false;
         }
     }, {
         key: "checkVisible",
         value: function checkVisible(point) {
-            var viewport = this.elementInViewport(point.element, point.surfaceVisible);
+            var elementInviewport = this.elementInViewport(point.element, point.surfaceVisible);
 
-            if (viewport) {
+            if (elementInviewport) {
                 this.setTriggerIn(point);
             } else {
                 this.setTriggerOut(point);
             }
         }
-    }, {
-        key: "on",
-        value: function on(string, callback) {
-            /*
-             * methods for creating various listeners
-            */
-            var direction = this.scrollOrient;
 
-            if (direction === "Up" && string === "scrollUp") {
-                callback();
-            }
-            if (direction === "Down" && string === "scrollDown") {
-                callback();
-            }
-            return this;
-        }
+        /**
+         * return the scroll direction via a string value
+         * @return {String}
+         * @memberOf Scrollmap
+         */
+
     }, {
         key: "scrollDirection",
         value: function scrollDirection() {
-            /*
-             * return the scroll direction via a string value
-            */
             var direction = "";
             var st = window.pageYOffset || document.documentElement.scrollTop;
 
             if (st > this.lastScrollTop) {
-                direction = "Down";
+                direction = "scrollDown";
             } else {
-                direction = "Up";
+                direction = "scrollUp";
             }
             this.lastScrollTop = st;
+
             return direction;
         }
+
+        /**
+         * bind event listeners to to enable the execution
+         * of all desired functions.
+         */
+
     }, {
-        key: "events",
-        value: function events() {
+        key: "bindEventListeners",
+        value: function bindEventListeners() {
             var _this2 = this;
 
             // initial check on page load to see if elements are visible
             window.addEventListener('load', function () {
+                console.log(_this2);
                 _this2.points.forEach(function (point) {
                     _this2.checkVisible(point);
                 });
@@ -248,6 +344,7 @@ var Scroll_Event_Trigger = function () {
             // check for visible elements on scroll
             window.addEventListener("scroll", function () {
                 _this2.scrollOrient = _this2.scrollDirection();
+                _this2.emit(_this2.scrollOrient);
                 _this2.points.forEach(function (point) {
                     _this2.checkVisible(point);
                 });
@@ -261,6 +358,8 @@ var Scroll_Event_Trigger = function () {
 ;
 
 var Scrollmap = new Scroll_Event_Trigger();
+
+Scrollmap.bindEventListeners();
 
 window.Scrollmap = Scrollmap;
 

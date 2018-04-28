@@ -90,23 +90,6 @@ can get the item and index of the array as arguments
 		});
 	});
 
-********************************************
-
-## Method - out(function)
-
-When the trigger is has been executed and the element is no longer in the viewport, the out method
-can be chained to the trigger to execute the specified function.
-
-**EXAMPLE**
-
-	Scrollmap.trigger({
-		target: ".boxes",
-		surfaceVisible: 0.2
-	}, (element) => {
-		element.classList.add("foo");
-	}).out((element) => {
-		element.classList.add("bar");
-	});
 
 ********************************************
 
