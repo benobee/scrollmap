@@ -6,14 +6,10 @@ import Scrollmap from "../src/scrollmap";
         Scrollmap.trigger({
           target: ".boxes",
           surfaceVisible: 0.5,
-          alwaysRunOnTrigger: true,
           expandSurfaceArea: "50px"
-          }, (el) => {
-              console.log(el)
-          })
-          .out(() => {
-              console.log("out")
-          });
+        }, () => {
+          console.log("triggered")
+        });
       }
   };
 
