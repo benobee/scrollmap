@@ -20,7 +20,7 @@ var Trigger = function () {
 		this.triggeredIn = false;
 		this.triggeredOut = false;
 		this.runOnScroll = false;
-		this.alwaysRunOnTrigger = false;
+		this.delay = this.alwaysRunOnTrigger = false;
 		if (options) {
 			_extends(this, options);
 		}
@@ -30,6 +30,7 @@ var Trigger = function () {
 		key: "onTriggerIn",
 		value: function onTriggerIn() {
 			this.callback(this.element);
+
 			return this;
 		}
 	}, {

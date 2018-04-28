@@ -23,13 +23,7 @@
         "Localize": true,
         "Modernizr": true,
         "google": true,
-        "require":true,
-
-        // Squarespace specific
-        "Y": true,
-        "ImageLoader": true,
-        "Static": true,
-        "Squarespace": true
+        "require":true
     },
     "rules": {
         // Possible Errors

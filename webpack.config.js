@@ -21,9 +21,10 @@ const WEBPACK_CONFIG = { module: {} };
  * production using "npm run build" from
  * the terminal.
 */
+let isProduction = false;
 
 if (process.env.PROD_ENV === 'true') {
-    const isProduction = true;
+    isProduction = true;
 }
 
 /***************************************/
@@ -140,7 +141,7 @@ plugins.push(promises);
 
 // @plugin: for minifying javascript
 const minify = new webpack.optimize.UglifyJsPlugin({
-    compress: { 
+    compress: {
         warnings: false 
     },
     output: {
