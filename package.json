@@ -1,6 +1,6 @@
 {
   "name": "scrollmap",
-  "version": "1.6.9",
+  "version": "1.7.1",
   "description": "A module for testing if an element is visible in the viewport, then triggers callbacks on execution.",
   "main": "./dist/scrollmap.js",
   "scripts": {
@@ -8,7 +8,6 @@
     "watch": "./node_modules/.bin/webpack -d --watch --colors",
     "build": "set PROD_ENV=true&&babel src -d dist",
     "dev": "set PROD_ENV=false&&webpack-dev-server ./test/test.js --hot --watch --colors",
-    "cdn" : "set PROD_ENV=false&&webpack&&set PROD_ENV=true&&webpack -p",
     "lint": "eslint src"
   },
   "repository": {
@@ -20,6 +19,7 @@
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.4.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.4.0",
@@ -47,7 +47,9 @@
     "webpack-dev-server": "^2.4.2"
   },
   "babel": {
-      "presets": ["latest"]
+    "presets": [
+      "latest"
+    ]
   },
   "keywords": [
     "element",
@@ -59,5 +61,6 @@
     "animation"
   ],
   "author": "Ben Obee",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {}
 }

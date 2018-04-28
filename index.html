@@ -2,28 +2,8 @@
 <html>
 <head>
 <script src="/scrollmap.js"></script>
-<link rel="stylesheet" type="text/css" href="/bundle.css">
 <title>ITEMS</title>
 <style type="text/css">
-	@keyframes spin {
-		0% {
-			opacity:1;
-		}
-		15% {
-			transform:rotate3d(0,0,1,0deg) translate3d(0,100px,0) scale3d(0.5, 0.5, 0);
-			opacity:0.8;
-		}
-		85%{
-			transform: rotate3d(0,0,1,360deg) translate3d(0,-50px,0) scale3d(1.9, 1.9, 0);
-			opacity:0.1;
-		}
-		99% {
-			opacity:0.2;
-		}
-		100% {
-			opacity:0.5;
-		}
-	}
 	body{
 		margin:0;
 	}
@@ -33,28 +13,28 @@
 	#page{
 		max-width:100%;
 		margin:0 auto;
-		height:100vh;
+		height:150vh;
 		overflow:hidden;
 		display:flex;
 		justify-content: center;
-		align-items:center;
+		align-items:flex-end;
 	}
 	.boxes{
 		display:flex;
 		flex-wrap:wrap;
 		background:none;
-		width:800px;
+		width:100%;
 	}	
 	.box{
-		height:80px;
+		height:180px;
 		width:80px;
 		background:none;
-		border-radius:50%;
-		background-color:antiqueWhite;
+		background-color:red;
+		margin:4px;
 	}
 	.fly{
 		background:#11fffb;
-		animation:spin 0.5s alternate ease-in-out infinite; 
+		animation:spin 3s alternate ease-in-out infinite; 
 	}
 	.color-change{
 		border:1px solid red;
@@ -63,12 +43,26 @@
 	.black {
 		background:black;
 	}
+	.hover-box{
+		height:23px;
+		width:23px;
+		position: absolute;
+		background:red;
+		animation:spin 0.2s infinite linear;
+		left:50%;
+		top:50%;
+		transform: translate(-50%, -50%);
+	}
 </style>
 </head>
 <body class="view-list collection-type-blog">
-<main id="page">
-	<div class="boxes"></div>
-</main>
-
+	<main id="page">
+		<div class="boxes">
+			<div class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
+		</div>
+	</main>
 </body>
 </html>

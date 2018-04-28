@@ -13,12 +13,12 @@ Using ES6:
 
 Using a CDN via jsDelivr:
 
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.6.5/cdn/scrollmap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.6.5/cdn/scrollmap.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.7.1/cdn/scrollmap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.7.1/cdn/scrollmap.js"></script>
 
 ********************************************
 
-##Method - trigger(options, callback)
+## Method - trigger(options, callback)
 
 **Description:**
  A method for adding triggers when element is visible in the viewport. 
@@ -53,7 +53,7 @@ into the callback as an argument.
 	
 ********************************************
 
-##Method - sequence(options, callback)
+## Method - sequence(options, callback)
 
 **Description:**
  A method for staggering an array of triggers. 
@@ -92,7 +92,7 @@ can get the item and index of the array as arguments
 
 ********************************************
 
-##Method - out(function)
+## Method - out(function)
 
 When the trigger is has been executed and the element is no longer in the viewport, the out method
 can be chained to the trigger to execute the specified function.
@@ -110,7 +110,7 @@ can be chained to the trigger to execute the specified function.
 
 ********************************************
 
-##Hooks
+## Hooks
 
 **data-scrollmap-loaded (boolean):**
 Once the element is initialized.
