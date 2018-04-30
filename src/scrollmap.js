@@ -13,6 +13,11 @@ class Scroll_Event_Trigger {
         this.topics = {};
     }
 
+    /**
+     * Publish part of pubsub pattern.
+     * @param  {String} topic 
+     * @param  {Object} data  
+     */
     emit (topic, data) {
         // return if the topic doesn't exist, or there are no listeners
         if (!this.topics[ topic ] || this.topics[ topic ].length < 1) {
@@ -23,6 +28,11 @@ class Scroll_Event_Trigger {
         this.topics[ topic ].forEach((listener) => listener(data || {}));
     }
 
+    /**
+     * Subscribe part of pubsub pattern
+     * @param  {String} topic
+     * @param  {Function} listener         
+     */
     on (topic, listener) {
         // create the topic if not yet created
         if (!this.topics[ topic ]) {
@@ -98,7 +108,6 @@ class Scroll_Event_Trigger {
                 array = array.reverse();
                 break;
             default:
-
         }
         return array;
     }
@@ -159,6 +168,16 @@ class Scroll_Event_Trigger {
         return this;
     }
 
+    /**
+     * The target element can either be a string query selector 
+     * or a DOM element. This determines which method is being
+     * used and retuns the element into an array.
+     * 
+     * @param  {String, HTMLElement} target the desired target DOM element. 
+     * @return {Array}        
+     * @memberOf Scrollmap 
+     */
+    
     checkSelector(target) {
         switch (typeof target) {
             case "string":
@@ -250,6 +269,14 @@ class Scroll_Event_Trigger {
         return false;
     }
 
+    /**
+     * Created a separate method for readability in what
+     * happens after the element in in the viewport.
+     * 
+     * @param  {[type]} point [description]
+     * @return {[type]}       [description]
+     * @memberOf Scrollmap
+     */
     checkVisible(point) {
         const elementInviewport = this.elementInViewport(point.element, point.surfaceVisible);
 
