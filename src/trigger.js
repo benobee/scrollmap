@@ -16,7 +16,9 @@ class Trigger {
 	onTriggerIn () {
 		if (this.triggerElement) {
 			this.triggerElement.forEach((node) => {
-				this.transition ? node.setAttribute("data-scrollmap-transition", this.transition) : false;
+				if (this.transition) {
+					node.setAttribute("data-scrollmap-transition", this.transition);
+				}
 				this.callback(node);
 			});
 		}

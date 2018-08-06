@@ -1,8 +1,9 @@
 {
   "presets": [
-  	"es2015"
+    "env"
   ],
   "plugins": [
-    "transform-object-assign"
+    "transform-object-assign",
+    "babel-plugin-dynamic-import-node"
   ]
 }
