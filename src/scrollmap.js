@@ -14,7 +14,7 @@ class Scroll_Event_Trigger {
     }
 
     /**
-     * Publish part of pubsub pattern.
+     * Publish method of the pubsub pattern.
      * @param  {String} topic
      * @param  {Object} data
      */
@@ -29,7 +29,7 @@ class Scroll_Event_Trigger {
     }
 
     /**
-     * Subscribe part of pubsub pattern
+     * Subscribe method of pubsub pattern
      * @param  {String} topic
      * @param  {Function} listener
      */

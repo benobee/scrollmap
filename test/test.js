@@ -19,7 +19,5 @@ import Scrollmap from "../src/scrollmap";
 
 })();
 
-console.log("loaded");
-
 
 
