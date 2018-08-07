@@ -35,7 +35,9 @@ var Trigger = function () {
 
 			if (this.triggerElement) {
 				this.triggerElement.forEach(function (node) {
-					_this.transition ? node.setAttribute("data-scrollmap-transition", _this.transition) : false;
+					if (_this.transition) {
+						node.setAttribute("data-scrollmap-transition", _this.transition);
+					}
 					_this.callback(node);
 				});
 			}
