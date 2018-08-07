@@ -19,7 +19,7 @@ module.exports = merge(rules, {
     ],
     output: {
         publicPath: '/',
-        path: __dirname + "../../dist",
+        path: __dirname + "../../cdn",
         filename: "scrollmap.js"
     }
 });

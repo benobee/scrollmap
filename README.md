@@ -13,8 +13,8 @@ Using ES6:
 
 Using a CDN via jsDelivr:
 
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.7.8/cdn/scrollmap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.7.8/cdn/scrollmap.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.7.9/cdn/scrollmap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/scrollmap@1.7.9/cdn/scrollmap.js"></script>
 
 ********************************************
 

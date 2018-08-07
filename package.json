@@ -1,12 +1,14 @@
 {
   "name": "scrollmap",
-  "version": "1.7.8",
+  "version": "1.7.9",
   "description": "A module for testing if an element is visible in the viewport, then triggers callbacks on execution.",
   "main": "./dist/scrollmap.js",
   "scripts": {
     "start": "webpack --progress --colors --watch --open --config ./webpack/webpack.dev.js",
     "watch": "./node_modules/.bin/webpack -d --watch --colors",
-    "build": "babel src -d dist",
+    "build": "yarn babel&&yarn cdn",
+    "babel": "babel src -d dist",
+    "cdn": "webpack --config ./webpack/webpack.prod.js",
     "dev": "webpack-dev-server ./test/test.js --hot --watch --colors --open --config ./webpack/webpack.dev.js",
     "lint": "eslint src"
   },
